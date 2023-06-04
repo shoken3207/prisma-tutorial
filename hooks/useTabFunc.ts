@@ -8,6 +8,7 @@ import { DeleteTabRequest } from '../types/tab/request/DeleteTabRequest';
 import { BaseApiResponse } from '../types/BaseApiResponse';
 import { DndTabRequest } from '../types/tab/request/DndTabRequest';
 import { updateFilterTypeRequest } from '../types/tab/request/UpdateFilterTypeRequest';
+import { BaseHooksResponse } from '../types/BaseHooksResponse';
 
 const useTabFunc = () => {
   const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
@@ -15,7 +16,7 @@ const useTabFunc = () => {
 
   const createTab = async (
     args: AxiosRequestConfig<CreateTabRequest>
-  ): Promise<void> => {
+  ): Promise<BaseHooksResponse | undefined> => {
     try {
       const { message }: BaseApiResponse = await axios.post(
         `${BASE_API_URL}/tabs/create`,
@@ -24,17 +25,20 @@ const useTabFunc = () => {
       if (!!message) {
         dispatch(setInfo({ text: message, severity: 'warning' }));
         dispatch(show());
+        return;
       }
+      return { success: true };
     } catch (err) {
       const { response } = err as { response: any };
       dispatch(setInfo({ text: response.message, severity: 'warning' }));
       dispatch(show());
+      return { success: false };
     }
   };
 
   const updateTab = async (
     args: AxiosRequestConfig<UpdateTabRequest>
-  ): Promise<void> => {
+  ): Promise<BaseHooksResponse | undefined> => {
     try {
       const { message }: BaseApiResponse = await axios.post(
         `${BASE_API_URL}/tabs/update`,
@@ -43,17 +47,20 @@ const useTabFunc = () => {
       if (!!message) {
         dispatch(setInfo({ text: message, severity: 'warning' }));
         dispatch(show());
+        return;
       }
+      return { success: true };
     } catch (err) {
       const { response } = err as { response: any };
       dispatch(setInfo({ text: response.message, severity: 'warning' }));
       dispatch(show());
+      return { success: false };
     }
   };
 
   const updateFilterType = async (
     args: AxiosRequestConfig<updateFilterTypeRequest>
-  ): Promise<void> => {
+  ): Promise<BaseHooksResponse | undefined> => {
     try {
       const { message }: BaseApiResponse = await axios.post(
         `${BASE_API_URL}/tabs/updateFilterType`,
@@ -62,17 +69,20 @@ const useTabFunc = () => {
       if (!!message) {
         dispatch(setInfo({ text: message, severity: 'warning' }));
         dispatch(show());
+        return;
       }
+      return { success: true };
     } catch (err) {
       const { response } = err as { response: any };
       dispatch(setInfo({ text: response.message, severity: 'warning' }));
       dispatch(show());
+      return { success: false };
     }
   };
 
   const deleteTab = async (
     args: AxiosRequestConfig<DeleteTabRequest>
-  ): Promise<void> => {
+  ): Promise<BaseHooksResponse | undefined> => {
     try {
       const { message }: BaseApiResponse = await axios.post(
         `${BASE_API_URL}/tabs/delete`,
@@ -81,17 +91,20 @@ const useTabFunc = () => {
       if (!!message) {
         dispatch(setInfo({ text: message, severity: 'warning' }));
         dispatch(show());
+        return;
       }
+      return { success: true };
     } catch (err) {
       const { response } = err as { response: any };
       dispatch(setInfo({ text: response.message, severity: 'warning' }));
       dispatch(show());
+      return { success: false };
     }
   };
 
   const dndTab = async (
     args: AxiosRequestConfig<DndTabRequest[]>
-  ): Promise<void> => {
+  ): Promise<BaseHooksResponse | undefined> => {
     try {
       const { message }: BaseApiResponse = await axios.post(
         `${BASE_API_URL}/tasks/dndTab`,
@@ -100,11 +113,14 @@ const useTabFunc = () => {
       if (!!message) {
         dispatch(setInfo({ text: message, severity: 'warning' }));
         dispatch(show());
+        return;
       }
+      return { success: true };
     } catch (err) {
       const { response } = err as { response: any };
       dispatch(setInfo({ text: response.message, severity: 'warning' }));
       dispatch(show());
+      return { success: false };
     }
   };
 

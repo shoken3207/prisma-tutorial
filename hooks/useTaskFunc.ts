@@ -8,6 +8,7 @@ import { UpdateTaskRequest } from '../types/task/request/UpdateTaskRequest';
 import { DeleteTaskRequest } from '../types/task/request/DeleteTaskRequest';
 import { DoneTaskRequest } from '../types/task/request/DoneTaskRequest';
 import { DndTaskRequest } from '../types/task/request/DndTaskRequest';
+import { BaseHooksResponse } from '../types/BaseHooksResponse';
 
 const useTaskFunc = () => {
   const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
@@ -15,7 +16,7 @@ const useTaskFunc = () => {
 
   const createTask = async (
     args: AxiosRequestConfig<CreateTaskRequest>
-  ): Promise<void> => {
+  ): Promise<BaseHooksResponse | undefined> => {
     try {
       const { message }: BaseApiResponse = await axios.post(
         `${BASE_API_URL}/tasks/create`,
@@ -24,17 +25,20 @@ const useTaskFunc = () => {
       if (!!message) {
         dispatch(setInfo({ text: message, severity: 'warning' }));
         dispatch(show());
+        return;
       }
+      return { success: true };
     } catch (err) {
       const { response } = err as { response: any };
       dispatch(setInfo({ text: response.message, severity: 'warning' }));
       dispatch(show());
+      return { success: false };
     }
   };
 
   const updateTask = async (
     args: AxiosRequestConfig<UpdateTaskRequest>
-  ): Promise<void> => {
+  ): Promise<BaseHooksResponse | undefined> => {
     try {
       const { message }: BaseApiResponse = await axios.post(
         `${BASE_API_URL}/tasks/update`,
@@ -43,17 +47,20 @@ const useTaskFunc = () => {
       if (!!message) {
         dispatch(setInfo({ text: message, severity: 'warning' }));
         dispatch(show());
+        return;
       }
+      return { success: true };
     } catch (err) {
       const { response } = err as { response: any };
       dispatch(setInfo({ text: response.message, severity: 'warning' }));
       dispatch(show());
+      return { success: false };
     }
   };
 
   const deleteTask = async (
     args: AxiosRequestConfig<DeleteTaskRequest>
-  ): Promise<void> => {
+  ): Promise<BaseHooksResponse | undefined> => {
     try {
       const { message }: BaseApiResponse = await axios.post(
         `${BASE_API_URL}/tasks/delete`,
@@ -62,17 +69,20 @@ const useTaskFunc = () => {
       if (!!message) {
         dispatch(setInfo({ text: message, severity: 'warning' }));
         dispatch(show());
+        return;
       }
+      return { success: true };
     } catch (err) {
       const { response } = err as { response: any };
       dispatch(setInfo({ text: response.message, severity: 'warning' }));
       dispatch(show());
+      return { success: false };
     }
   };
 
   const doneTask = async (
     args: AxiosRequestConfig<DoneTaskRequest>
-  ): Promise<void> => {
+  ): Promise<BaseHooksResponse | undefined> => {
     try {
       const { message }: BaseApiResponse = await axios.post(
         `${BASE_API_URL}/tasks/done`,
@@ -81,17 +91,20 @@ const useTaskFunc = () => {
       if (!!message) {
         dispatch(setInfo({ text: message, severity: 'warning' }));
         dispatch(show());
+        return;
       }
+      return { success: true };
     } catch (err) {
       const { response } = err as { response: any };
       dispatch(setInfo({ text: response.message, severity: 'warning' }));
       dispatch(show());
+      return { success: false };
     }
   };
 
   const dndTask = async (
     args: AxiosRequestConfig<DndTaskRequest[]>
-  ): Promise<void> => {
+  ): Promise<BaseHooksResponse | undefined> => {
     try {
       const { message }: BaseApiResponse = await axios.post(
         `${BASE_API_URL}/tasks/dndTask`,
@@ -100,11 +113,14 @@ const useTaskFunc = () => {
       if (!!message) {
         dispatch(setInfo({ text: message, severity: 'warning' }));
         dispatch(show());
+        return;
       }
+      return { success: true };
     } catch (err) {
       const { response } = err as { response: any };
       dispatch(setInfo({ text: response.message, severity: 'warning' }));
       dispatch(show());
+      return { success: false };
     }
   };
 
